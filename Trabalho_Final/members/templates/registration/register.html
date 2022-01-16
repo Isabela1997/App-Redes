@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Cadastre-se {% endblock %}
+{% block  content %}
+
+<br/><h1>Cadastre-se</h1>
+<br/>
+<div class="form-group">
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-dark">Cadastre-se</button>
+</div>
+
+{% endblock %}
