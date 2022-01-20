@@ -10,14 +10,19 @@
     {{ post.post_date}} 
 
     {% if user.is_authenticated %}
-        </small> - <small><a href="{% url 'update-detail' post.pk %}">(Editar)</a>
-        <a href="{% url 'delete-post' post.pk %}">(Deletar)</a>
+        {% if user.id == post.author.id %}
+            </small> - <small><a href="{% url 'update-detail' post.pk %}">(Editar)</a>
+            <a href="{% url 'delete-post' post.pk %}">(Deletar)</a>
+        {% endif %}
     {% endif %}
 
 </small>
 <hr>
 <br/>
-{{ post.body|linebreaks }}
+<img src="{{ post.header_image.url }}">
+
+<br/><br/>
+{{ post.body|safe }}
 
 <br/><br/>
 <a href="{% url "home" %}"  class="btn btn-dark">Back</a>

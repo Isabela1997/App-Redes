@@ -12,13 +12,15 @@
     {{ post.post_date }} - <a href="{% url "category" post.category %}">{{ post.category }}</a>
 
     {% if user.is_authenticated %}
-        - <small><a href="{% url 'update-detail' post.pk %}">(Editar)</a>
-            <a href="{% url 'delete-post' post.pk %}">(Deletar)</a>
+        {% if user.id == post.author.id %}
+            - <small><a href="{% url 'update-detail' post.pk %}">(Editar)</a>
+                <a href="{% url 'delete-post' post.pk %}">(Deletar)</a>
+        {% endif %}
     {% endif %}
     
     </small>
     <br/>
-    {{ post.body|slice:"200"|linebreaks }}</li>
+    {{ post.body|safe }}</li>
 {% endfor%}
 </ul>
 

@@ -3,14 +3,19 @@
 {% block  content %}
 
 {% if user.is_authenticated %}
-    <br/><h1>Atualizar publicação</h1>
-    <br/>
-    <div class="form-group">
-        <form method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button class="btn btn-dark">Update</button>
-    </div>
+    {% if user.id == post.author.id %}
+        <br/><h1>Atualizar publicação</h1>
+        <br/>
+        <div class="form-group">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.media }}
+                {{ form.as_p }}
+                <button class="btn btn-dark">Update</button>
+        </div>
+    {% else %}
+        Você não possui permissão para editar esta publicação!
+    {% endif %}
 {% else %}
 
 Não está logado, logo não pode editar a publicação!

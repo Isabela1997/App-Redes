@@ -3,18 +3,21 @@
 {% block  content %}
 
 {% if user.is_authenticated %}
-    <br/><h1>Deletar publicação</h1>
-    <br/>
-    <h3>Deletar: {{ post.title }}</h3>
+    {% if user.id == post.author.id %}
+        <br/><h1>Deletar publicação</h1>
+        <br/>
+        <h3>Deletar: {{ post.title }}</h3>
 
-    <br/>
-    <div class="form-group">
-        <form method="POST">
-            {% csrf_token %}
-            <button class="btn btn-dark">Deletar</button>
-    </div>
+        <br/>
+        <div class="form-group">
+            <form method="POST">
+                {% csrf_token %}
+                <button class="btn btn-dark">Deletar</button>
+        </div>
+    {% else %}
+        Você não possui permissão para deletar esta publicação!
+    {% endif %}
 {% else %}
-
 Você não tem permissão para deletar se não estiver logado!
 
 {% endif %}
