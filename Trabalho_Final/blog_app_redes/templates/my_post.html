@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Esse é o seu Histórico de Publicações!</h1>
+
+{%if user.is_authenticated%}
+
+        <ul>
+            {% for post in object_list %}
+                {% if user.id == post.author.id %}
+                    <li><a href="{% url 'article-detail' post.pk %}"> {{ post.title }}</a> -
+                        {{ post.author.first_name }}
+                        <!--Passando Link para o Botão de Editar Publicação-->
+                        {{ post.author.last_name }} - {{ post.post_date }}
+                        <small>
+                        
+                            - <a href = "#">| Editar Publicação |</a>
+                            <a href = "#"> Deletar Publicação |</a>
+                            
+                        </small> <br/>
+                        {{ post.body|slice:":200"|safe}} </li>
+                    {%endif%}
+            {% endfor %}
+        </ul>
+    
+{%endif%}
+</ul>
+Página {{page_obj.number}} de {{page_obj.paginator.num_pages}}
+
+<ul style = "margin-left: 10px;" class = "pagination">
+    {%if page_obj.has_previous %}
+        <li><a href="?page=1"><button >&laquo; Primeira </button></a></li>
+        <li><a href="?page={{page_obj.previous_page_number}}"><button > Anterior </button></a></li>
+    {%endif%}
+
+    {%if page_obj.has_next%}
+        <li><a href="?page={{page_obj.next_page_number}}"> <button > Próximo </button></a></li>
+        <li><a href="?page={{page_obj.paginator.num_pages}}"> <button> Última </button></a></li>
+    {%endif%}
+</ul>
+{% endblock %}

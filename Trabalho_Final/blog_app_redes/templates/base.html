@@ -23,29 +23,13 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              
-              <!-- Category menu code -->
-              {% if cat_menu %}
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Categorias
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-
-                  {% for item in cat_menu %}
-                  <a class="dropdown-item" href="{% url "category" item %}">{{ item }}</a>
-                  {% endfor %}
-
-                </div>
-              </li>
-              {% else %}
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url "category-list" %}">Categorias</a>
-                </li>             
-
-              {% endif %}
+            
 
               {% if user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'my_post' %}">Minhas Publicações</a>
+                </li>
+
                 <li class="nav-item">
                   <a class="nav-link" href="{% url "add_post" %}">Adicionar publicação</a>
                 </li>
@@ -67,10 +51,27 @@
                 </li>
               
               {% endif %}
+              <!-- Category menu code -->
+              {% if cat_menu %}
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Categorias
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-              <li class="nav-item">
-                <a class="nav-link disabled">Disabled</a>
+                  {% for item in cat_menu %}
+                  <a class="dropdown-item" href="{% url "category" item %}">{{ item }}</a>
+                  {% endfor %}
+
+                </div>
               </li>
+              {% else %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url "category-list" %}">Categorias</a>
+                </li>             
+
+              {% endif %}
+
             </ul>
             <form class="d-flex">
               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

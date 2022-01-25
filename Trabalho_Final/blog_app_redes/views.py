@@ -3,6 +3,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .models import Post, Category
 from .forms import PostForm, EditForm
 from django.urls import reverse_lazy
+from django.core.paginator import Paginator
 
 #def home(request):
     #return render(request, "home.html", {})
@@ -12,6 +13,7 @@ class HomeView(ListView):
     template_name = 'home.html'
     #ordering = ["-id"]
     ordering = ["-post_date"]
+    paginate_by = 3 
 
     def get_context_data(self, *args, **kwargs):
         cat_menu = Category.objects.all()
@@ -29,6 +31,12 @@ def CategoryView(request, cats):
 def CategoryListView(request):
     cat_menu_list = Category.objects.all()
     return render(request, "categories_list.html", {"cat_menu_list" : cat_menu_list})
+
+class UserHomeView(ListView):
+    model = Post
+    template_name = 'my_post.html'
+    ordering = ["-post_date"]
+    paginate_by = 3 
 
 class ArticleDetailView(DetailView):
     model = Post
