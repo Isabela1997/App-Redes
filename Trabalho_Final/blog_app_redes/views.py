@@ -13,7 +13,7 @@ class HomeView(ListView):
     template_name = 'home.html'
     #ordering = ["-id"]
     ordering = ["-post_date"]
-    paginate_by = 3 
+    paginate_by = 2 
 
     def get_context_data(self, *args, **kwargs):
         cat_menu = Category.objects.all()
@@ -36,7 +36,6 @@ class UserHomeView(ListView):
     model = Post
     template_name = 'my_post.html'
     ordering = ["-post_date"]
-    paginate_by = 3 
 
 class ArticleDetailView(DetailView):
     model = Post

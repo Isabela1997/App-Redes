@@ -1,5 +1,36 @@
+<style>
+
+  .topnav a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  .header {
+    background-color: rgb(144, 37, 144);
+    font-family: 'Lobster'; 
+    color: white;
+    padding: 10px;
+    font-size: 32px;
+    text-align: center;
+  }
+  
+  .logo-image{
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-top: -6px;
+  } 
+
+  .new_font{
+    font-family: 'Lobster'; 
+  }
+  
+  </style>
+
 <!doctype html>
 <html lang="en">
+  <div class="new_font">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -15,8 +46,13 @@
     </title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
+
+    <div class = "header">
+     Blog de Aplicações em Redes
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid topnav">
           <a class="navbar-brand" href="{% url "home" %}">Blog de Aplicações em Redes</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -95,4 +131,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
     -->
   </body>
+  </div>
 </html>

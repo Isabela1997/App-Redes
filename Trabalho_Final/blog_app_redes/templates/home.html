@@ -1,39 +1,134 @@
+<style>
+    .button{
+        background-color: black;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    .button:hover {background-color: gray}
+
+    .button:active {
+        background-color:  gray;
+        box-shadow: 0 5px #666;
+        transform: translateY(4px);
+    }
+
+    .sub_header {
+        text-align: center;
+    }
+   
+    .body_allignment{
+        text-align: center;
+        padding-top: 30px;
+    }
+
+    .body_text_allignment {
+        text-align: justify;
+    }
+
+    .beyond_posts {
+        padding-bottom: 30px;
+    }
+
+    .button_pos {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+    }
+
+    .header_post {
+        text-align: center;
+        font-family: 'Lobster'; 
+        color:  palevioletred;
+    }
+
+    .edit_delete_button {
+        background-color: gray;
+        border: none;
+        color: white;
+        padding: 3px 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 12px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+    
+    .limit_size {
+        width: 800px;
+        margin: auto;
+    }
+
+    .bg-color {
+        background-color: pink;
+    }
+</style>
+
 {% extends 'base.html' %}
 
 {% block  content %}
-    
-<h1>Post</h1>
 
-<ul>
+<div class = "sub_header">
+    <h1> Publicações</h1>
+</div>
+
+<div class = "body_allignment">
+
 {% for post in object_list %}
-    <li><a href="{% url 'article-detail' post.pk %}">{{ post.title }}</a> - 
-    {{ post.author.first_name }}
-    {{ post.author.last_name}} - 
-    {{ post.post_date }} - <a href="{% url "category" post.category %}">{{ post.category }}</a>
+    <div class = "beyond_posts limit_size">
+        <div class= "header_post">
 
-    {% if user.is_authenticated %}
-        {% if user.id == post.author.id %}
-            - <small><a href="{% url 'update-detail' post.pk %}">(Editar)</a>
-                <a href="{% url 'delete-post' post.pk %}">(Deletar)</a>
+            <h2>{{ post.title }}</h2>
+           
+        </div>  
+        Por: {{ post.author.first_name }}
+        {{ post.author.last_name}} -  
+        {{ post.post_date }} <a href="{% url 'category' post.category|slugify %}"> #{{ post.category }}</a>
+
+
+        
+        </small>
+        <br/>
+        {{post.header_image_url}}
+        <div class = "body_text_allignment bg-color">
+            {{ post.body|safe }}
+        </div>
+
+        {% if user.is_authenticated %}
+            {% if user.id == post.author.id %}
+            <div class = "edit_delete_button">
+                <a href="{% url 'update-detail' post.pk %}"><button class = "edit_delete_button" >  Editar  </button></a>
+
+                <a href="{% url 'delete-post' post.pk %}"><button class = "edit_delete_button" >  Apagar  </button></a>
+                
+                <a href="{% url 'article-detail' post.pk %}"><button class = "edit_delete_button" >  Ver mais  </button></a>
+            </div>
+            {% endif %}
         {% endif %}
-    {% endif %}
-    
-    </small>
-    <br/>
-    {{ post.body|safe }}</li>
+    </div>
 {% endfor%}
-</ul>
-Página {{page_obj.number}} de {{page_obj.paginator.num_pages}}
 
-<ul style = "margin-left: 10px;" class = "pagination">
-    {%if page_obj.has_previous %}
-        <li><a href="?page=1"><button >&laquo; Primeira </button></a></li>
-        <li><a href="?page={{page_obj.previous_page_number}}"><button > Anterior </button></a></li>
-    {%endif%}
+</div>
 
-    {%if page_obj.has_next%}
-        <li><a href="?page={{page_obj.next_page_number}}"> <button > Próximo </button></a></li>
-        <li><a href="?page={{page_obj.paginator.num_pages}}"> <button> Última </button></a></li>
-    {%endif%}
-</ul>
+<div class="button_hover button_pos">   
+    <ul style = "margin-left: 10px;" class = "pagination">
+        {%if page_obj.has_previous %}
+            <li><a href="?page=1"><button class = "button" >  Primeira  </button></a></li>
+            <li><a href="?page={{page_obj.previous_page_number}}"><button class = "button ">  Anterior  </button></a></li>
+        {%endif%}
+    
+        {%if page_obj.has_next%}
+            <li><a href="?page={{page_obj.next_page_number}}"> <button  class = "button">  Próximo  </button></a></li>
+            <li><a  href="?page={{page_obj.paginator.num_pages}}" > <button class = "button">  Última </button></a></li>
+        {%endif%}
+    </ul>
+</div>
 {% endblock %}
