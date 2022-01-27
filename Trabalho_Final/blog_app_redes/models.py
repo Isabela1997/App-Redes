@@ -1,3 +1,4 @@
+### Código adaptado da playlist do canal Codemy: https://www.youtube.com/watch?v=B40bteAMM_M&list=PLCC34OHNcOtr025c1kHSPrnP18YPB-NFi ###
 from distutils.command.upload import upload
 from django.db import models
 from django.contrib.auth.models import User
