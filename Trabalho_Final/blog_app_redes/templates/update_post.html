@@ -1,17 +1,40 @@
+<style>
+    .button{
+        background-color: pink;
+        border: none;
+        color: black;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    .button:hover {background-color: gray}
+
+    .button:active {
+        background-color:  gray;
+        box-shadow: 0 5px #666;
+        transform: translateY(4px);
+    }
+</style>
+
 {% extends 'base.html' %}
 {% block title %}Editar publicação {% endblock %}
 {% block  content %}
 
 {% if user.is_authenticated %}
     {% if user.id == post.author.id %}
-        <br/><h1>Atualizar publicação</h1>
+        <br/><h1 style = "text-align: center;">Atualize sua Publicação!</h1>
         <br/>
         <div class="form-group">
             <form method="POST">
                 {% csrf_token %}
                 {{ form.media }}
                 {{ form.as_p }}
-                <button class="btn btn-dark">Update</button>
+                <button class="button">Atualize já!</button>
         </div>
     {% else %}
         Você não possui permissão para editar esta publicação!

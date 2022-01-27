@@ -1,8 +1,8 @@
 <style>
     .button{
-        background-color: black;
+        background-color: pink;
         border: none;
-        color: white;
+        color: black;
         padding: 15px 32px;
         text-align: center;
         text-decoration: none;
@@ -50,14 +50,14 @@
     }
 
     .edit_delete_button {
-        background-color: gray;
+        background-color: lightpink;
         border: none;
-        color: white;
+        color: black;
         padding: 3px 10px;
         text-align: center;
         text-decoration: none;
         display: inline-block;
-        font-size: 12px;
+        font-size: 14px;
         margin: 4px 2px;
         cursor: pointer;
     }
@@ -70,13 +70,29 @@
     .bg-color {
         background-color: pink;
     }
+
+    .limit_img_size {
+        width: 800px;
+        height: 400px;
+    }
+
+    .bg-text-color {
+    background-color: #D7AEF2;
+    }
+
+    .box_title {
+        border: 3px solid pink;
+        width: 800px;
+    }
 </style>
 
 {% extends 'base.html' %}
 
 {% block  content %}
 
+
 <div class = "sub_header">
+    <br/>
     <h1> Publicações</h1>
 </div>
 
@@ -84,7 +100,7 @@
 
 {% for post in object_list %}
     <div class = "beyond_posts limit_size">
-        <div class= "header_post">
+        <div class= "header_post box_title">
 
             <h2>{{ post.title }}</h2>
            
@@ -97,22 +113,27 @@
         
         </small>
         <br/>
-        <img src = "{{post.header_image.url}}"> 
-        <div class = "body_text_allignment bg-color">
-            {{ post.body|safe }}
+            
+
+        <div class = "body_text_allignment">
+            {{post.snippet}}
+        
+
+        {% if post.header_image %}
+                <img style = "padding-top: 50px;"class = "limit_img_size" src = "{{post.header_image.url}}"> 
+        {% endif %}
         </div>
 
         {% if user.is_authenticated %}
             {% if user.id == post.author.id %}
-            <div class = "edit_delete_button">
+            
                 <a href="{% url 'update-detail' post.pk %}"><button class = "edit_delete_button" >  Editar  </button></a>
 
                 <a href="{% url 'delete-post' post.pk %}"><button class = "edit_delete_button" >  Apagar  </button></a>
-                
-                <a href="{% url 'article-detail' post.pk %}"><button class = "edit_delete_button" >  Ver mais  </button></a>
-            </div>
+    
             {% endif %}
         {% endif %}
+        <a href="{% url 'article-detail' post.pk %}"><button class = "edit_delete_button" >  Ver mais  </button></a>
     </div>
 {% endfor%}
 

@@ -1,18 +1,41 @@
+<style>
+    .button{
+        background-color: pink;
+        border: none;
+        color: black;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    .button:hover {background-color: gray}
+
+    .button:active {
+        background-color:  gray;
+        box-shadow: 0 5px #666;
+        transform: translateY(4px);
+    }
+</style>
+
 {% extends 'base.html' %}
 {% block title %}Deletar publicação {% endblock %}
 {% block  content %}
 
 {% if user.is_authenticated %}
     {% if user.id == post.author.id %}
-        <br/><h1>Deletar publicação</h1>
+        <br/><h1 style="text-align: center;">Você deseja realmente fazer isso?</h1>
         <br/>
-        <h3>Deletar: {{ post.title }}</h3>
+        <h3 style="text-align: center;">Deletar: "{{ post.title }}"?</h3>
 
         <br/>
         <div class="form-group">
             <form method="POST">
                 {% csrf_token %}
-                <button class="btn btn-dark">Deletar</button>
+                <button class="button">Deletar</button>
         </div>
     {% else %}
         Você não possui permissão para deletar esta publicação!

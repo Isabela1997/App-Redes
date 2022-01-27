@@ -1,16 +1,39 @@
+<style>
+    .button{
+        background-color: pink;
+        border: none;
+        color: black;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    .button:hover {background-color: gray}
+
+    .button:active {
+        background-color:  gray;
+        box-shadow: 0 5px #666;
+        transform: translateY(4px);
+    }
+</style>
+
 {% extends 'base.html' %}
 {% block title %}Crie uma nova publicação! {% endblock %}
 {% block  content %}
 
 {% if user.is_authenticated %}
-    <br/><h1>Adicionar publicação</h1>
+    <br/><h1 style = "text-align: center;">Adicione uma nova Publicação!</h1>
     <br/>
     <div class="form-group">
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.media }}
             {{ form.as_p }}
-            <button class="btn btn-dark">Post</button>
+            <button class = "button" >  Adicionar Publicação!  </button>
     </div>
 {% else %}
 

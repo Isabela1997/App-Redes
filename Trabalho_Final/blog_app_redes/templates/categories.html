@@ -1,32 +1,134 @@
+<style>
+    .button{
+        background-color: pink;
+        border: none;
+        color: black;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    .button:hover {background-color: gray}
+
+    .button:active {
+        background-color:  gray;
+        box-shadow: 0 5px #666;
+        transform: translateY(4px);
+    }
+
+    .sub_header {
+        text-align: center;
+    }
+   
+    .body_allignment{
+        text-align: center;
+        padding-top: 30px;
+    }
+
+    .body_text_allignment {
+        text-align: justify;
+    }
+
+    .beyond_posts {
+        padding-bottom: 30px;
+    }
+
+    .button_pos {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+    }
+
+    .header_post {
+        text-align: center;
+        font-family: 'Lobster'; 
+        color:  palevioletred;
+    }
+
+    .edit_delete_button {
+        background-color: lightpink;
+        border: none;
+        color: black;
+        padding: 3px 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+    
+    .limit_size {
+        width: 800px;
+        margin: auto;
+    }
+
+    .bg-color {
+        background-color: pink;
+    }
+
+    .limit_img_size {
+        width: 800px;
+        height: 400px;
+    }
+
+    .bg-text-color {
+    background-color: #D7AEF2;
+    }
+
+    .box_title {
+        border: 3px solid pink;
+        width: 800px;
+    }
+</style>
+
 {% extends 'base.html' %} 
 
 {% block  content %}
 
 {% if category_posts %}
-    <h1>{{ cats }}</h1>
+    <h1 style =  "text-align: center;">Tudo sobre {{ cats }}</h1>
 
-    <ul>
+<div class = "body_allignment">
     {% for post in category_posts %}
 
-        <li><a href="{% url 'article-detail' post.pk %}">{{ post.title }}</a> - 
-            {{ post.author.first_name }}
-            {{ post.author.last_name}} - 
-            {{ post.post_date }} 
+    <div class = "beyond_posts limit_size">
+        <div class= "header_post box_title">
+            <h2>{{ post.title }}</h2> 
+        </div>  
+        Por: {{ post.author.first_name }}
+        {{ post.author.last_name}} -  
+        {{ post.post_date }} <a href="{% url 'category' post.category|slugify %}"> #{{ post.category }}</a>
 
-            {% if user.is_authenticated %}
-                - <small><a href="{% url 'update-detail' post.pk %}">(Editar)</a>
-                    <a href="{% url 'delete-post' post.pk %}">(Deletar)</a>
-            {% endif %}
-            
-            </small>
-            <br/>
-            {{ post.body|slice:"200"|linebreaks }}</li>
-    
+        <div class = "body_text_allignment">
+            {{post.snippet}}
+        
+
+        {% if post.header_image %}
+                <img style = "padding-top: 50px;"class = "limit_img_size" src = "{{post.header_image.url}}"> 
+        {% endif %}
+        </div>
+
+        {% if user.is_authenticated %}
+        {% if user.id == post.author.id %}
+        
+            <a href="{% url 'update-detail' post.pk %}"><button class = "edit_delete_button" >  Editar  </button></a>
+
+            <a href="{% url 'delete-post' post.pk %}"><button class = "edit_delete_button" >  Apagar  </button></a>
+
+        {% endif %}
+        {% endif %}
+        <a href="{% url 'article-detail' post.pk %}"><button class = "edit_delete_button" >  Ver mais  </button></a>    
+        </div>
             {% endfor %}
 {% else %}
     <h2>Essa página não existe!</h2>
 {% endif %}
+</div>
 
-</ul>
 
 {% endblock %}

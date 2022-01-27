@@ -25,7 +25,7 @@ class Post(models.Model):
     body = RichTextField(blank=True, null=True)
     post_date = models.DateField(auto_now_add=True)
     category = models.CharField(max_length=255, default="Sem categoria")
-    #snippet = models.CharField(max_length=255, default="Sem categoria")
+    snippet = models.CharField(max_length=1000, default="")
 
     def __str__(self):
         return self.title + " | " + str(self.author)

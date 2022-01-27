@@ -1,18 +1,41 @@
+<style>
+    .button{
+        background-color: pink;
+        border: none;
+        color: black;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    .button:hover {background-color: gray}
+
+    .button:active {
+        background-color:  gray;
+        box-shadow: 0 5px #666;
+        transform: translateY(4px);
+    }
+</style>
+
 {% extends 'base.html' %}
 {% block title %}{{ post.title_tag }} {% endblock %}
 
 {% block  content %}
 
-<h1>{{ post.title }}</h1>
-<small>Escrito port: 
+<h1 style='text-align: center;'>{{ post.title }}</h1>
+<h3 style='text-align: center;'>Escrito por: 
     {{ post.author.first_name }}
     {{post.author.last_name }} - 
-    {{ post.post_date}} 
+    {{ post.post_date}}  </h3>
 
     {% if user.is_authenticated %}
         {% if user.id == post.author.id %}
-            </small> - <small><a href="{% url 'update-detail' post.pk %}">(Editar)</a>
-            <a href="{% url 'delete-post' post.pk %}">(Deletar)</a>
+         <small><a href="{% url 'update-detail' post.pk %}"> <button class = "button">Editar</button></a>
+            <a href="{% url 'delete-post' post.pk %}"><button class = "button">Apagar</button></a>
         {% endif %}
     {% endif %}
 
@@ -22,8 +45,10 @@
 
 <br/><br/>
 {{ post.body|safe }}
-
+{% if post.header_image %}
+<img style = "padding-top: 50px;"class = "limit_img_size" src = "{{post.header_image.url}}"> 
+{% endif %}
 <br/><br/>
-<a href="{% url "home" %}"  class="btn btn-dark">Back</a>
+<a href="{% url "home" %}"  class="button">Página Inicial</a>
 
 {% endblock %}

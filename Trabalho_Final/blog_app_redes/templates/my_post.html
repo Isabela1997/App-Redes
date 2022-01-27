@@ -1,30 +1,143 @@
+<style>
+    .button{
+        background-color: pink;
+        border: none;
+        color: black;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    .button:hover {background-color: gray}
+
+    .button:active {
+        background-color:  gray;
+        box-shadow: 0 5px #666;
+        transform: translateY(4px);
+    }
+
+    .sub_header {
+        text-align: center;
+    }
+   
+    .body_allignment{
+        text-align: center;
+        padding-top: 30px;
+    }
+
+    .body_text_allignment {
+        text-align: justify;
+    }
+
+    .beyond_posts {
+        padding-bottom: 30px;
+    }
+
+    .button_pos {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+    }
+
+    .header_post {
+        text-align: center;
+        font-family: 'Lobster'; 
+        color:  palevioletred;
+    }
+
+    .edit_delete_button {
+        background-color: lightpink;
+        border: none;
+        color: black;
+        padding: 3px 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+    
+    .limit_size {
+        width: 800px;
+        margin: auto;
+    }
+
+    .bg-color {
+        background-color: pink;
+    }
+
+    .limit_img_size {
+        width: 800px;
+        height: 400px;
+    }
+
+    .bg-text-color {
+    background-color: #D7AEF2;
+    }
+
+    .box_title {
+        border: 3px solid pink;
+        width: 800px;
+    }
+</style>
+
 {% extends 'base.html' %}
 
 {% block content %}
 
-<h1>Esse é o seu Histórico de Publicações!</h1>
+<div class = "sub_header">
+    <br/>
+    <h1> Esse é o seu Histórico de Publicações!</h1>
+</div>
+
+<div class = "body_allignment">
 
 {%if user.is_authenticated%}
 
-        <ul>
+        
             {% for post in object_list %}
                 {% if user.id == post.author.id %}
-                    <li><a href="{% url 'article-detail' post.pk %}"> {{ post.title }}</a> -
-                        {{ post.author.first_name }}
-                        <!--Passando Link para o Botão de Editar Publicação-->
-                        {{ post.author.last_name }} - {{ post.post_date }}
-                        <small>
+                    <div class = "beyond_posts limit_size">
+                    <div class= "header_post box_title">
+            
+                        <h2>{{ post.title }}</h2>
+                       
+                    </div>  
+                    Por: {{ post.author.first_name }}
+                    {{ post.author.last_name}} -  
+                    {{ post.post_date }} <a href="{% url 'category' post.category|slugify %}"> #{{ post.category }}</a>
+            
+            
+                    
+                    </small>
+                    <br/>
                         
-                            - <a href = "#">| Editar Publicação |</a>
-                            <a href = "#"> Deletar Publicação |</a>
-                            
-                        </small> <br/>
-                        {{ post.body|slice:":200"|safe}} </li>
+            
+                    <div class = "body_text_allignment">
+                        {{post.body|safe}}
+                    
+            
+                    {% if post.header_image %}
+                            <img style = "padding-top: 50px;"class = "limit_img_size" src = "{{post.header_image.url}}"> 
+                    {% endif %}
+                    </div>
+
+                    
+                        <a href="{% url 'update-detail' post.pk %}"><button class = "edit_delete_button" >  Editar  </button></a>
+        
+                        <a href="{% url 'delete-post' post.pk %}"><button class = "edit_delete_button" >  Apagar  </button></a>
+                        
+                        <a href="{% url 'article-detail' post.pk %}"><button class = "edit_delete_button" >  Ver mais  </button></a>
+                        
+                 
                     {%endif%}
             {% endfor %}
-        </ul>
     
 {%endif%}
-</ul>
-
+</div>
 {% endblock %}
