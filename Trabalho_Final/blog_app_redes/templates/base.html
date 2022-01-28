@@ -57,11 +57,10 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg_purple_header">
         <div class="container-fluid topnav">
-          <div class = "logo">
-            <a href="{% url "home" %}">
-              <img src = "/Trabalho_Final/blog_app_redes/templates/botao-home.png" width ="30" height = "30"  alt = ""> 
-            </a>
-          </div>
+          <a class="navbar-brand" href="{% url 'home' %}"> Música em Dia </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
